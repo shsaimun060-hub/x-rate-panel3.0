@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ORBIT // Satellite Lab</title>
+<style>
+:root{--cyan:#43e7dc;--green:#58ff9a;--blue:#168bff;--bg:#030b16;--panel:rgba(5,24,38,.78)}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{font-family:ui-monospace,Consolas,monospace;background:radial-gradient(ellipse at 50% 45%,#0b2840 0,#061522 42%,#020711 100%);color:#d9fff8}
+#stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(1px 1px at 12% 18%,#9ff 99%,transparent),radial-gradient(1px 1px at 82% 22%,#7f9 99%,transparent),radial-gradient(1px 1px at 67% 78%,#9ff 99%,transparent),radial-gradient(1px 1px at 28% 83%,#7f9 99%,transparent),radial-gradient(1px 1px at 48% 12%,#fff 99%,transparent);background-size:310px 270px;opacity:.45}
+.top{position:absolute;top:16px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:center;z-index:5;letter-spacing:2px;font-size:12px;color:var(--cyan)}
+.brand{font-weight:900;font-size:15px;text-shadow:0 0 14px #20e5dd}
+.status{border:1px solid #2b9d9a;padding:7px 10px;border-radius:4px;background:#06232b}
+.layout{position:absolute;inset:64px 18px 18px;display:grid;grid-template-columns:minmax(170px,1fr) minmax(260px,1.45fr) minmax(170px,1fr);gap:14px;min-height:0}
+.panel{background:var(--panel);border:1px solid rgba(67,231,220,.26);border-radius:12px;box-shadow:0 0 28px rgba(0,220,210,.07),inset 0 0 24px rgba(0,160,180,.04);position:relative;overflow:hidden}
+.panel h3{font-size:11px;font-weight:500;letter-spacing:2px;color:var(--cyan);margin:0 0 14px}
+.earth-panel{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px}
+.earth{width:min(19vw,210px);aspect-ratio:1;border-radius:50%;position:relative;overflow:hidden;background:
+radial-gradient(ellipse at 32% 30%,rgba(180,255,232,.9) 0 2%,transparent 25%),
+radial-gradient(ellipse at 65% 63%,#0c7d5b 0 12%,transparent 13%),
+radial-gradient(ellipse at 38% 48%,#1eaa76 0 18%,transparent 19%),
+radial-gradient(ellipse at 64% 30%,#148e71 0 13%,transparent 14%),
+radial-gradient(circle at 35% 35%,#38d8bd,#087b9d 47%,#063b75 72%,#020b2a 100%);
+box-shadow:inset -22px -10px 35px #010817,0 0 28px #00bfae88,0 0 75px #087dba44}
+.earth:before{content:"";position:absolute;inset:-20%;border-radius:50%;background:repeating-linear-gradient(0deg,transparent 0 18px,#9effe722 19px 20px),repeating-linear-gradient(90deg,transparent 0 18px,#9effe722 19px 20px);transform:rotate(-18deg);animation:globe 18s linear infinite}
+.earth:after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(110deg,transparent 25%,#d6fff522 48%,transparent 66%)}
+@keyframes globe{to{transform:rotate(342deg)}}
+.sub{font-size:10px;color:#85bdbd;text-align:center;line-height:1.8;margin-top:18px}
+.metric{width:100%;display:flex;justify-content:space-between;border-top:1px solid #17464f;padding:9px 2px;font-size:10px;color:#91bdbd}
+.metric b{color:var(--green);font-weight:500}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px}
+.orbit-wrap{width:min(34vw,330px);aspect-ratio:1;display:grid;place-items:center;position:relative}
+.orbit{position:absolute;inset:8%;border:1px solid #39e5d977;border-radius:50%;box-shadow:0 0 24px #13b9bf33;animation:spin 12s linear infinite}
+.orbit.two{inset:20%;border-style:dashed;border-color:#5bff9b88;animation:spin 8s linear infinite reverse}
+.orbit:before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 16px var(--green);top:8%;left:20%}
+.orbit.two:before{background:var(--cyan);top:75%;left:3%}
+.core{width:37%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#2bfff0,#087c9b 40%,#05284a 72%,#020914);box-shadow:0 0 28px #00e5d788,inset -10px -10px 24px #020914;border:1px solid #7bfff1aa;font-size:clamp(26px,5vw,48px);animation:pulse 2.8s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{50%{filter:brightness(1.35);box-shadow:0 0 48px #00e5d7}}
+.center-label{font-size:11px;letter-spacing:3px;color:var(--cyan);margin-top:12px}
+.center-small{font-size:9px;color:#6ca6aa;margin-top:7px}
+.computer{padding:16px;display:flex;flex-direction:column}
+.monitor{border:1px solid #2d7c7e;border-radius:7px;padding:8px;background:#020b12;box-shadow:0 0 16px #00bca522}
+.screen{height:100px;overflow:hidden;font-size:9px;line-height:1.8;color:#6cffb4}
+.screen p{margin:0;white-space:nowrap;animation:logs 9s linear infinite}
+@keyframes logs{to{transform:translateY(-45%)}}
+.pc{height:8px;width:70%;margin:0 auto;background:linear-gradient(90deg,#17434d,#4de5cf,#17434d);border-radius:0 0 8px 8px}
+.keyboard{height:14px;width:88%;margin:3px auto 0;background:repeating-linear-gradient(90deg,#1d414d 0 8px,#0a1c28 8px 10px);clip-path:polygon(8% 0,92% 0,100% 100%,0 100%)}
+.readout{margin-top:18px;font-size:10px;color:#8bb6b9;line-height:2}
+.readout b{color:var(--green);font-weight:500}
+.quotes{position:absolute;left:50%;transform:translateX(-50%);bottom:16px;width:min(520px,90%);height:78px;overflow:hidden;border:1px solid #246b70;border-radius:8px;background:linear-gradient(90deg,#04151ddd,#092936ee,#04151ddd);z-index:4;mask-image:linear-gradient(transparent,#000 13%,#000 87%,transparent)}
+.quote-track{position:absolute;inset:0;animation:quoteUp 18s linear infinite}
+.quote{height:78px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px 18px;color:#b9fff0;font-size:12px;letter-spacing:.3px;text-shadow:0 0 10px #35d9c5}
+@keyframes quoteUp{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
+.footer{position:absolute;bottom:5px;left:20px;font-size:8px;color:#527d86;letter-spacing:1px}
+@media(max-width:700px){
+ .top{left:12px;right:12px;top:10px}.layout{inset:54px 10px 12px;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px}
+ .earth-panel{grid-column:1;grid-row:1}.center{grid-column:2;grid-row:1}.computer{grid-column:1 / 3;grid-row:2}
+ .earth{width:min(31vw,150px)}.orbit-wrap{width:min(42vw,190px)}.quotes{bottom:22px;height:58px}.quote{height:58px;font-size:10px}
+ .screen{height:60px}.footer{display:none}
+}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<header class="top"><div class="brand">◉ ORBIT / SATELLITE LAB</div><div class="status">● SYSTEM ONLINE</div></header>
+<main class="layout">
+ <section class="panel earth-panel">
+  <h3>EARTH // VIEW</h3>
+  <div class="earth"></div>
+  <div class="sub">BLUE PLANET<br>EARTH OBSERVATION</div>
+  <div class="metric"><span>OCEAN</span><b>71%</b></div>
+  <div class="metric"><span>MODE</span><b>SIMULATION UI</b></div>
+ </section>
+ <section class="panel center">
+  <h3>ORBITAL CORE</h3>
+  <div class="orbit-wrap"><div class="orbit"></div><div class="orbit two"></div><div class="core">✦</div></div>
+  <div class="center-label">SATELLITE NETWORK</div>
+  <div class="center-small">VISUAL ANIMATION • NOT LIVE TELEMETRY</div>
+ </section>
+ <section class="panel computer">
+  <h3>GROUND STATION // CONSOLE</h3>
+  <div class="monitor"><div class="screen">
+   <p> &gt; booting ground station...</p><p> &gt; loading orbital interface...</p><p> &gt; earth observation module ready</p><p> &gt; signal visualization active</p><p> &gt; awaiting public data feed...</p><p> &gt; system nominal</p>
+   <p> &gt; booting ground station...</p><p> &gt; loading orbital interface...</p><p> &gt; earth observation module ready</p><p> &gt; signal visualization active</p><p> &gt; awaiting public data feed...</p><p> &gt; system nominal</p>
+  </div></div><div class="pc"></div><div class="keyboard"></div>
+  <div class="readout">CPU STATUS <b>READY</b><br>ORBIT DISPLAY <b>ACTIVE</b><br>DATA SOURCE <b>PUBLIC</b><br>MODE <b>DEMO VISUAL</b></div>
+ </section>
+</main>
+<div class="quotes"><div class="quote-track">
+ <div class="quote">“Look up at the stars, and not down at your feet.”</div>
+ <div class="quote">“Somewhere, something incredible is waiting to be known.”</div>
+ <div class="quote">“The Earth is what we all have in common.”</div>
+ <div class="quote">“Exploration is curiosity put into action.”</div>
+ <div class="quote">“Look up at the stars, and not down at your feet.”</div>
+ <div class="quote">“Somewhere, something incredible is waiting to be known.”</div>
+ <div class="quote">“The Earth is what we all have in common.”</div>
+ <div class="quote">“Exploration is curiosity put into action.”</div>
+</div></div>
+<div class="footer">ORBIT UI // DECORATIVE MOTION ONLY // NO TARGET TRACKING</div>
+</body>
+</html>
