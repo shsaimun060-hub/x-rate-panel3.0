@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080000">
+<title>X KOBER PANEL V5</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;padding:16px;
+ background:radial-gradient(circle at top,#390000,#080000 65%);
+ color:white;font-family:Arial,sans-serif
+}
+header{text-align:center;padding:20px 0}
+.logo{
+ width:88px;height:88px;margin:auto;
+ display:grid;place-items:center;
+ border:2px solid red;border-radius:24px;
+ color:red;font-size:58px;font-weight:bold;
+ text-shadow:0 0 25px red;
+ box-shadow:0 0 25px #ff000088;
+}
+h1{color:#ff2525;text-shadow:0 0 15px red}
+.sub{color:#ff7777;font-size:12px;letter-spacing:2px}
+.box{
+ background:#180606;border:1px solid #861010;
+ border-radius:15px;padding:15px;margin:14px 0;
+ box-shadow:0 0 15px #ff000022
+}
+.title{color:#ff3535;font-weight:bold;margin-bottom:12px}
+.row{
+ display:flex;justify-content:space-between;
+ align-items:center;padding:13px 2px;
+ border-bottom:1px solid #421010;
+ gap:10px
+}
+.row:last-child{border:0}
+.switch{
+ width:48px;height:25px;border-radius:30px;
+ background:#444;position:relative;cursor:pointer;
+ flex-shrink:0;transition:.2s
+}
+.switch:after{
+ content:"";position:absolute;width:19px;height:19px;
+ left:3px;top:3px;background:white;
+ border-radius:50%;transition:.2s
+}
+.switch.active{background:#ff1717}
+.switch.active:after{left:26px}
+button{
+ background:#e91515;color:white;border:0;
+ border-radius:10px;padding:13px;
+ font-weight:bold;cursor:pointer
+}
+.menu{display:flex;gap:6px;margin:15px 0}
+.menu button{flex:1;font-size:11px}
+.menu button.selected{background:#790000}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{
+ background:#250909;border:1px solid #641010;
+ border-radius:10px;padding:15px;text-align:center
+}
+.stat strong{display:block;color:red;font-size:23px}
+.hidden{display:none!important}
+.mainbtn{width:100%;margin-top:12px}
+.input,select{
+ width:100%;padding:12px;margin:8px 0;
+ color:white;background:#090000;
+ border:1px solid #8b1010;border-radius:8px
+}
+.notice{
+ color:#ffaaaa;background:#260707;
+ padding:12px;border-radius:9px;
+ font-size:12px;line-height:1.6
+}
+footer{text-align:center;color:#777;font-size:11px;padding:20px}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">X</div>
+ <h1 id="panelName">X KOBER PANEL</h1>
+ <div class="sub">ULTIMATE GAMING DASHBOARD</div>
+ <p style="color:red;font-size:12px">
+ VERSION V5.0 | RED VIP EDITION
+ </p>
+ <div id="clock" style="color:#ff7777"></div>
+</header>
+
+<div class="grid">
+ <div class="stat">
+  <strong id="status">OFF</strong>
+  PANEL STATUS
+ </div>
+ <div class="stat">
+  <strong id="count">0</strong>
+  ACTIVE OPTIONS
+ </div>
+</div>
+
+<div class="menu">
+ <button class="selected" onclick="page('home',this)">HOME</button>
+ <button onclick="page('aim',this)">AIM</button>
+ <button onclick="page('visual',this)">VISUAL</button>
+ <button onclick="page('settings',this)">SETTINGS</button>
+</div>
+
+<section id="home">
+ <div class="box">
+  <div class="title">MAIN CONTROL CENTER</div>
+
+  <div class="row"><span>Auto Headshot (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Aimbot (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Teleport (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Wall Hack (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Drag Headshot Practice</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>USP Mode (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+ </div>
+
+ <button class="mainbtn" onclick="activate()" id="activate">
+ ACTIVATE DEMO PANEL
+ </button>
+ <p id="message" style="text-align:center;color:#ff7777">
+ Welcome to X KOBER PANEL
+ </p>
+</section>
+
+<section id="aim" class="hidden">
+ <div class="box">
+  <div class="title">AIM CONTROL</div>
+
+  <div class="row"><span>Aim Lock (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Head Aim Practice</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>USP Headshot Practice</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Drag Training</span><div class="switch" onclick="toggle(this)"></div></div>
+
+  <label>Aim Location</label>
+  <select>
+   <option>Training Target</option>
+   <option>Center Practice</option>
+   <option>Custom Practice</option>
+  </select>
+
+  <label>Sensitivity Practice</label>
+  <input class="input" type="range" min="1" max="100" value="50">
+ </div>
+</section>
+
+<section id="visual" class="hidden">
+ <div class="box">
+  <div class="title">VISUAL DISPLAY</div>
+
+  <div class="row"><span>ESP Line (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Box ESP (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Player Marker (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Distance Display (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Radar Display (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+ </div>
+
+ <div class="box">
+  <div class="title">DISPLAY INFORMATION</div>
+  <p>Theme: RED NEON</p>
+  <p>Interface: V5.0</p>
+  <p>Mode: DISPLAY ONLY</p>
+ </div>
+</section>
+
+<section id="settings" class="hidden">
+ <div class="box">
+  <div class="title">PANEL SETTINGS</div>
+
+  <label>Change Panel Name</label>
+  <input class="input" id="newName" placeholder="Enter panel name">
+  <button class="mainbtn" onclick="renamePanel()">SAVE NAME</button>
+
+  <div class="row"><span>Red Theme</span><span style="color:red">ON</span></div>
+  <div class="row"><span>Version</span><span>V5.0</span></div>
+  <div class="row"><span>Platform</span><span>Android / Web</span></div>
+ </div>
+
+ <div class="notice">
+  This is a gaming interface demonstration.
+  Its controls do not modify Free Fire or other games.
+ </div>
+</section>
+
+<footer>
+ X KOBER PANEL © 2026<br>
+ RED VIP EDITION V5.0
+</footer>
+
+<script>
+function updateCount(){
+ let switches=document.querySelectorAll('.switch');
+ let count=0;
+ switches.forEach(s=>{
+  if(s.classList.contains('active'))count++;
+ });
+ document.getElementById('count').textContent=count;
+}
+
+function toggle(el){
+ el.classList.toggle('active');
+ updateCount();
+}
+
+function page(id,btn){
+ document.querySelectorAll('section').forEach(s=>{
+  s.classList.add('hidden');
+ });
+ document.getElementById(id).classList.remove('hidden');
+
+ document.querySelectorAll('.menu button').forEach(b=>{
+  b.classList.remove('selected');
+ });
+ btn.classList.add('selected');
+}
+
+let enabled=false;
+
+function activate(){
+ enabled=!enabled;
+ document.getElementById('status').textContent=
+ enabled?'ON':'OFF';
+
+ document.getElementById('activate').textContent=
+ enabled?'DEACTIVATE PANEL':'ACTIVATE DEMO PANEL';
+
+ document.getElementById('message').textContent=
+ enabled?'Demo interface activated!':'Demo interface stopped!';
+}
+
+function renamePanel(){
+ let name=document.getElementById('newName').value.trim();
+ if(!name)return alert('Enter a panel name first!');
+ document.getElementById('panelName').textContent=name;
+ alert('Panel name updated!');
+}
+
+function clock(){
+ document.getElementById('clock').textContent=
+ new Date().toLocaleString();
+}
+
+setInterval(clock,1000);
+clock();
+updateCount();
+</script>
+
+</body>
+</html>
+       
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080000">
+<title>X KOBER PANEL V5</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;padding:16px;
+ background:radial-gradient(circle at top,#390000,#080000 65%);
+ color:white;font-family:Arial,sans-serif
+}
+header{text-align:center;padding:20px 0}
+.logo{
+ width:88px;height:88px;margin:auto;
+ display:grid;place-items:center;
+ border:2px solid red;border-radius:24px;
+ color:red;font-size:58px;font-weight:bold;
+ text-shadow:0 0 25px red;
+ box-shadow:0 0 25px #ff000088;
+}
+h1{color:#ff2525;text-shadow:0 0 15px red}
+.sub{color:#ff7777;font-size:12px;letter-spacing:2px}
+.box{
+ background:#180606;border:1px solid #861010;
+ border-radius:15px;padding:15px;margin:14px 0;
+ box-shadow:0 0 15px #ff000022
+}
+.title{color:#ff3535;font-weight:bold;margin-bottom:12px}
+.row{
+ display:flex;justify-content:space-between;
+ align-items:center;padding:13px 2px;
+ border-bottom:1px solid #421010;
+ gap:10px
+}
+.row:last-child{border:0}
+.switch{
+ width:48px;height:25px;border-radius:30px;
+ background:#444;position:relative;cursor:pointer;
+ flex-shrink:0;transition:.2s
+}
+.switch:after{
+ content:"";position:absolute;width:19px;height:19px;
+ left:3px;top:3px;background:white;
+ border-radius:50%;transition:.2s
+}
+.switch.active{background:#ff1717}
+.switch.active:after{left:26px}
+button{
+ background:#e91515;color:white;border:0;
+ border-radius:10px;padding:13px;
+ font-weight:bold;cursor:pointer
+}
+.menu{display:flex;gap:6px;margin:15px 0}
+.menu button{flex:1;font-size:11px}
+.menu button.selected{background:#790000}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{
+ background:#250909;border:1px solid #641010;
+ border-radius:10px;padding:15px;text-align:center
+}
+.stat strong{display:block;color:red;font-size:23px}
+.hidden{display:none!important}
+.mainbtn{width:100%;margin-top:12px}
+.input,select{
+ width:100%;padding:12px;margin:8px 0;
+ color:white;background:#090000;
+ border:1px solid #8b1010;border-radius:8px
+}
+.notice{
+ color:#ffaaaa;background:#260707;
+ padding:12px;border-radius:9px;
+ font-size:12px;line-height:1.6
+}
+footer{text-align:center;color:#777;font-size:11px;padding:20px}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">X</div>
+ <h1 id="panelName">X KOBER PANEL</h1>
+ <div class="sub">ULTIMATE GAMING DASHBOARD</div>
+ <p style="color:red;font-size:12px">
+ VERSION V5.0 | RED VIP EDITION
+ </p>
+ <div id="clock" style="color:#ff7777"></div>
+</header>
+
+<div class="grid">
+ <div class="stat">
+  <strong id="status">OFF</strong>
+  PANEL STATUS
+ </div>
+ <div class="stat">
+  <strong id="count">0</strong>
+  ACTIVE OPTIONS
+ </div>
+</div>
+
+<div class="menu">
+ <button class="selected" onclick="page('home',this)">HOME</button>
+ <button onclick="page('aim',this)">AIM</button>
+ <button onclick="page('visual',this)">VISUAL</button>
+ <button onclick="page('settings',this)">SETTINGS</button>
+</div>
+
+<section id="home">
+ <div class="box">
+  <div class="title">MAIN CONTROL CENTER</div>
+
+  <div class="row"><span>Auto Headshot (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Aimbot (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Teleport (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Wall Hack (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Drag Headshot Practice</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>USP Mode (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+ </div>
+
+ <button class="mainbtn" onclick="activate()" id="activate">
+ ACTIVATE DEMO PANEL
+ </button>
+ <p id="message" style="text-align:center;color:#ff7777">
+ Welcome to X KOBER PANEL
+ </p>
+</section>
+
+<section id="aim" class="hidden">
+ <div class="box">
+  <div class="title">AIM CONTROL</div>
+
+  <div class="row"><span>Aim Lock (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Head Aim Practice</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>USP Headshot Practice</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Drag Training</span><div class="switch" onclick="toggle(this)"></div></div>
+
+  <label>Aim Location</label>
+  <select>
+   <option>Training Target</option>
+   <option>Center Practice</option>
+   <option>Custom Practice</option>
+  </select>
+
+  <label>Sensitivity Practice</label>
+  <input class="input" type="range" min="1" max="100" value="50">
+ </div>
+</section>
+
+<section id="visual" class="hidden">
+ <div class="box">
+  <div class="title">VISUAL DISPLAY</div>
+
+  <div class="row"><span>ESP Line (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Box ESP (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Player Marker (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Distance Display (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+  <div class="row"><span>Radar Display (Demo)</span><div class="switch" onclick="toggle(this)"></div></div>
+ </div>
+
+ <div class="box">
+  <div class="title">DISPLAY INFORMATION</div>
+  <p>Theme: RED NEON</p>
+  <p>Interface: V5.0</p>
+  <p>Mode: DISPLAY ONLY</p>
+ </div>
+</section>
+
+<section id="settings" class="hidden">
+ <div class="box">
+  <div class="title">PANEL SETTINGS</div>
+
+  <label>Change Panel Name</label>
+  <input class="input" id="newName" placeholder="Enter panel name">
+  <button class="mainbtn" onclick="renamePanel()">SAVE NAME</button>
+
+  <div class="row"><span>Red Theme</span><span style="color:red">ON</span></div>
+  <div class="row"><span>Version</span><span>V5.0</span></div>
+  <div class="row"><span>Platform</span><span>Android / Web</span></div>
+ </div>
+
+ <div class="notice">
+  This is a gaming interface demonstration.
+  Its controls do not modify Free Fire or other games.
+ </div>
+</section>
+
+<footer>
+ X KOBER PANEL © 2026<br>
+ RED VIP EDITION V5.0
+</footer>
+
+<script>
+function updateCount(){
+ let switches=document.querySelectorAll('.switch');
+ let count=0;
+ switches.forEach(s=>{
+  if(s.classList.contains('active'))count++;
+ });
+ document.getElementById('count').textContent=count;
+}
+
+function toggle(el){
+ el.classList.toggle('active');
+ updateCount();
+}
+
+function page(id,btn){
+ document.querySelectorAll('section').forEach(s=>{
+  s.classList.add('hidden');
+ });
+ document.getElementById(id).classList.remove('hidden');
+
+ document.querySelectorAll('.menu button').forEach(b=>{
+  b.classList.remove('selected');
+ });
+ btn.classList.add('selected');
+}
+
+let enabled=false;
+
+function activate(){
+ enabled=!enabled;
+ document.getElementById('status').textContent=
+ enabled?'ON':'OFF';
+
+ document.getElementById('activate').textContent=
+ enabled?'DEACTIVATE PANEL':'ACTIVATE DEMO PANEL';
+
+ document.getElementById('message').textContent=
+ enabled?'Demo interface activated!':'Demo interface stopped!';
+}
+
+function renamePanel(){
+ let name=document.getElementById('newName').value.trim();
+ if(!name)return alert('Enter a panel name first!');
+ document.getElementById('panelName').textContent=name;
+ alert('Panel name updated!');
+}
+
+function clock(){
+ document.getElementById('clock').textContent=
+ new Date().toLocaleString();
+}
+
+setInterval(clock,1000);
+clock();
+updateCount();
+</script>
+
+</body>
+</html>
+       
